@@ -1,9 +1,10 @@
 import pygame
-import pyautogui
 import random
-import math
+# import math
 
-width, height = pyautogui.size()
+# width, height = pyautogui.size()
+width, height = 1300, 900
+
 
 
 class Bullets(pygame.sprite.Sprite):
@@ -336,11 +337,11 @@ class Bullets2(pygame.sprite.Sprite):
 
         x_diff = player.rect.x - self.rect.x
         y_diff = player.rect.y - self.rect.y
-        angle = math.atan2(y_diff, x_diff);
+        # angle = math.atan2(y_diff, x_diff);
 
         velocity = random.randrange(20, 45)
-        self.change_x = math.cos(angle) * velocity
-        self.change_y = math.sin(angle) * velocity
+        # self.change_x = math.cos(angle) * velocity
+        # self.change_y = math.sin(angle) * velocity
 
     def update(self):
         if self.type == "boss2_attack3":

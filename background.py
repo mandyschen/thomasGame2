@@ -1,5 +1,4 @@
 import pygame
-import pyautogui
 import asyncio
 import math
 

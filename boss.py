@@ -1,12 +1,12 @@
 import random
 
 import pygame
-import pyautogui
 
 from bullets import Bullets
 from bullets import Bullets2
 
-width, height = pyautogui.size()
+width, height = 1300, 900
+# width, height = pyautogui.size()
 screen = pygame.display.set_mode((width, height))
 
 
@@ -244,7 +244,7 @@ class Boss2:
         self.dashing = True
 
         self.movement = 0
-        self.cooldown1 = 1000
+        self.cooldown1 = 2000
         self.cooldown2 = 2500
         self.cooldown3a = 3000
         self.cooldown3b = 2500

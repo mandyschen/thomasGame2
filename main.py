@@ -1,5 +1,4 @@
 import pygame
-import pyautogui
 from background import Background
 from player import Player
 from boss import Boss1, Boss2, Boss3
@@ -30,7 +29,7 @@ state = ["begin"]
 
 async def play(which_boss, bg2):
     while True:
-        print(state)
+        # print(state)
         if state[0] == "begin":
             player = Player(width / 5, height / 3)
 
@@ -55,8 +54,7 @@ async def play(which_boss, bg2):
 
             pygame.display.update()
             # pygame.display.update()
-        elif state[0] == "death":
-            print("hi")
+        elif state[0] == "death1":
             t = "player_death"
             bg2.again = False
             bg.ending_bg(t)
@@ -64,8 +62,8 @@ async def play(which_boss, bg2):
             pygame.display.update()
             key = pygame.key.get_pressed()
             if key[pygame.K_SPACE]:
-                state[0] = ""
-        elif state[0] == "win":
+                state[0] = "boss1"
+        elif state[0] == "win1":
             t = "player_win"
             bg2.again = False
             bg.ending_bg(t)
@@ -73,7 +71,25 @@ async def play(which_boss, bg2):
             pygame.display.update()
             key = pygame.key.get_pressed()
             if key[pygame.K_SPACE]:
-                state[0] = ""
+                state[0] = "boss1"
+        elif state[0] == "death2":
+            t = "player_death"
+            bg2.again = False
+            bg.ending_bg(t)
+            player.basic_keys(bg, play, False, state)
+            pygame.display.update()
+            key = pygame.key.get_pressed()
+            if key[pygame.K_SPACE]:
+                state[0] = "boss2"
+        elif state[0] == "win2":
+            t = "player_win"
+            bg2.again = False
+            bg.ending_bg(t)
+            player.basic_keys(bg, play, False, state)
+            pygame.display.update()
+            key = pygame.key.get_pressed()
+            if key[pygame.K_SPACE]:
+                state[0] = "boss2"
         else:
             if state[0] == "boss1":
                 boss = Boss1(width - 90, height / 1.5)
@@ -104,6 +120,7 @@ async def play(which_boss, bg2):
             pausing = False
 
             while boss.rect.top < height + 100 and player.health_remaining > 0:
+            # while boss.rect.top < height + 100:
 
                 if state[0] == "selection":
                     break
@@ -143,16 +160,26 @@ async def play(which_boss, bg2):
                     screen.blit(pause_bg, (0, 0))
 
                     pygame.display.update()
-                    await asyncio.sleep(0)
+                await asyncio.sleep(0)
 
-            if boss.health_remaining <= 0:
-                soundObj = pygame.mixer.Sound('sounds/thank_you.mp3')
-                soundObj.play()
-                state[0] = "win"
-            elif player.health_remaining <= 0:
-                soundObj = pygame.mixer.Sound('sounds/sad_trombone.mp3')
-                soundObj.play()
-                state[0] = "death"
+            if state[0] == "boss1":
+                if boss.health_remaining <= 0:
+                    soundObj = pygame.mixer.Sound('sounds/thank_you.mp3')
+                    soundObj.play()
+                    state[0] = "win1"
+                elif player.health_remaining <= 0:
+                    soundObj = pygame.mixer.Sound('sounds/sad_trombone.mp3')
+                    soundObj.play()
+                    state[0] = "death1"
+            else:
+                if boss.health_remaining <= 0:
+                    soundObj = pygame.mixer.Sound('sounds/thank_you.mp3')
+                    soundObj.play()
+                    state[0] = "win2"
+                elif player.health_remaining <= 0:
+                    soundObj = pygame.mixer.Sound('sounds/sad_trombone.mp3')
+                    soundObj.play()
+                    state[0] = "death2"
 
             if which_boss == 1:
                 bg2.again1 = True

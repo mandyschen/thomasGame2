@@ -1,11 +1,11 @@
 import pygame
-import pyautogui
 from bullets import Bullets
 
 import asyncio
 from background import Background
 
-width, height = pyautogui.size()
+# width, height = pyautogui.size()
+width, height = 1300, 900
 screen = pygame.display.set_mode((width, height))
 
 
@@ -17,9 +17,9 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.surface.get_rect()
         self.rect.center = [x, y]
 
-        self.x_speed = 15 # 15
-        self.y_speed = 25 # 25
-        self.gravity = 15 # 15
+        self.x_speed = 25 # 15
+        self.y_speed = 35 # 25
+        self.gravity = 25 # 15
 
         self.health_start = 5 #CHANGE THIS BACK TO 5
         self.health_remaining = self.health_start
@@ -90,8 +90,8 @@ class Player(pygame.sprite.Sprite):
             self.attack_type = "player_slow"
 
         if key[pygame.K_SPACE] and self.time_now - self.last_shot > self.cooldown:
-            soundObj = pygame.mixer.Sound('sounds/hitting.mp3')
-            soundObj.play()
+            # soundObj = pygame.mixer.Sound('sounds/hitting.mp3')
+            # soundObj.play()
             self.bullet = Bullets(self.rect.centerx, self.rect.top, self.attack_type)
             self.bullet_group.add(self.bullet)
             self.last_shot = self.time_now
